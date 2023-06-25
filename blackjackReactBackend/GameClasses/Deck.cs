@@ -2,11 +2,13 @@
 {
     public class Deck
     {
+        private Random rand = new();
         List<Card> deck = new List<Card>();
 
         public Deck(int amount)
         {
             deck = DeckBuilder(amount);
+            Shuffle();
         }
 
         private List<Card> DeckBuilder(int amount)
@@ -30,6 +32,27 @@
                 }
             }
 
+            return temp;
+        }
+
+        private void Shuffle()
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                for (int j = this.deck.Count - 1; j > 0; j--)
+                {
+                    int k = rand.Next(j + 1);
+                    Card temp = this.deck[j];
+                    this.deck[j] = this.deck[k];
+                    this.deck[k] = temp;
+                }
+            }
+        }
+
+        public Card Deal_card()
+        {
+            Card temp = deck[0];
+            deck.RemoveAt(0);
             return temp;
         }
     }
