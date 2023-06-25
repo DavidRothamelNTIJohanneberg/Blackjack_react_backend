@@ -1,17 +1,11 @@
 ﻿namespace blackjackReactBackend.GameClasses
 {
-    public class Deck
+    public static class Deck
     {
-        private Random rand = new();
-        List<Card> deck = new List<Card>();
+        private static Random rand = new();
+        static List<Card> deck = new List<Card>();
 
-        public Deck(int amount)
-        {
-            deck = DeckBuilder(amount);
-            Shuffle();
-        }
-
-        private List<Card> DeckBuilder(int amount)
+        public static void DeckBuilder(int amount)
         {
             List<Card> temp = new List<Card>();
             string[] colors = { "Hearts", "Diamonds", "Spades", "Clubs" };
@@ -32,24 +26,24 @@
                 }
             }
 
-            return temp;
+            deck = temp;
         }
 
-        private void Shuffle()
+        public static void Shuffle()
         {
             for (int i = 0; i < 1; i++)
             {
-                for (int j = this.deck.Count - 1; j > 0; j--)
+                for (int j = deck.Count - 1; j > 0; j--)
                 {
                     int k = rand.Next(j + 1);
-                    Card temp = this.deck[j];
-                    this.deck[j] = this.deck[k];
-                    this.deck[k] = temp;
+                    Card temp = deck[j];
+                    deck[j] = deck[k];
+                    deck[k] = temp;
                 }
             }
         }
 
-        public Card Deal_card()
+        public static Card Deal_card()
         {
             Card temp = deck[0];
             deck.RemoveAt(0);
