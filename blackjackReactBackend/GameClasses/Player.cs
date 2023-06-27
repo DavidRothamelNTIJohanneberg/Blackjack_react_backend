@@ -34,7 +34,7 @@
             numberOfPlayers++;
             key = numberOfPlayers;
 
-            hands = new() { new Hand(removeMoney(10)) }; //Have to fix so that it in someway always removes from money
+            hands = new() { new Hand(removeMoney(10), this) };
         }
 
         public void Print_hand()
@@ -66,10 +66,12 @@
             public bool wants = true;
             public int bet;
             public List<Card> hand = new();
+            private Player player;
 
-            public Hand(int bet)
+            public Hand(int bet, Player player)
             {
                 this.bet = bet;
+                this.player = player;
             }
 
             public void Take_card()//Should be private or not?
@@ -84,7 +86,7 @@
 
             public void Double()
             {
-                bet *= 2;
+                bet += player.removeMoney(bet);
                 wants = false;
                 Take_card();
             }
@@ -94,6 +96,18 @@
                 Card temp = hand[0];
                 hand.RemoveAt(0);
                 return temp;
+            }
+
+            public int Sum()
+            {
+                int sum = 0;
+
+                foreach (Card i in hand)
+                {
+                    sum += i.blackjackValue;
+                }
+
+                return sum;
             }
         }
 
