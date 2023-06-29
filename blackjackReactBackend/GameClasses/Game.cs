@@ -4,7 +4,7 @@ namespace blackjackReactBackend.GameClasses
 {
     public class Game
     {
-        Player player;
+        public int amount_of_players = 1;
 
         public Game()
         {
@@ -12,16 +12,7 @@ namespace blackjackReactBackend.GameClasses
 
             Console.WriteLine("Hello World");
 
-            Deck.DeckBuilder(6);
-            Deck.Shuffle();
-            player = new(100);
-
-            for (int i = 0; i < 2; i++)
-            {
-                player.hands[0].Take_card();
-            }
-
-            player.Print_hand();
+            GameLoop.Build(amount_of_players);
 
             while (true) { }
         }

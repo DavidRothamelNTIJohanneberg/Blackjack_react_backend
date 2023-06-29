@@ -1,22 +1,24 @@
 ﻿namespace blackjackReactBackend.GameClasses
 {
-    public class GameLoop
+    public static class GameLoop
     {
-        List<Player> players = new();
+        static List<Player> players = new();
 
-        Dealer dealer;
+        static Dealer dealer = new();
 
-        public GameLoop()
+        public static void Build(int amount_of_players)
         {
-            Start();
+            Start(amount_of_players);
             Mid();
             End();
         }
 
-        private void Start()
+        private static void Start(int amount_of_players)
         {
-            dealer = new();
-            for (int i = 0; i < 2; i++)
+            Deck.DeckBuilder(6);
+            Deck.Shuffle();
+
+            for (int i = 0; i < amount_of_players; i++)
             {
                 players.Add(new(100));
             }
@@ -33,7 +35,7 @@
             //Some sort of sending data to Frontend here, so that it can see the hands
         }
 
-        private void Mid()
+        private static void Mid()
         {
             //Send data of the players hand after every action
             foreach (Player i in players)
@@ -90,7 +92,7 @@
             }
         }
 
-        private void End()
+        private static void End()
         {
             int dealer_sum = dealer.Sum();
             if (!dealer.bust)
