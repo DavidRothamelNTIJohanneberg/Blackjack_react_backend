@@ -2,8 +2,8 @@ using blackjackReactBackend.GameClasses;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
-var game = new Game();
 
-//app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "Hello World!");
+app.MapGet("/game", () => new Game());
 
-//app.Run();
+app.Run();

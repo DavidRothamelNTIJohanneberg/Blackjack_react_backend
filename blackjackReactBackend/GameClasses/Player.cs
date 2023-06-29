@@ -54,29 +54,34 @@
 
         }
         // Has to be reworked
-        /*public void Split_hand()
+        public void Split_hand()
         {
-            Card temp = hand[0][1];
-        }*/
+            hands.Add(new Hand(hands[0].bet, this, hands[0].Split()));
+            hands[1].Take_card();
+        }
 
         public class Hand
         {
             public bool blackjack = false;
-            public bool broke = false;
             public bool wants = true;
             public int bet;
             public List<Card> hand = new();
             private Player player;
 
-            public Hand(int bet, Player player)
+            public Hand(int bet, Player player, Card card = null)
             {
                 this.bet = bet;
                 this.player = player;
+                if (card != null)
+                {
+                    hand.Add(card);
+                }
             }
 
-            public void Take_card()//Should be private or not?
+            public void Take_card()
             {
                 hand.Add(Deck.Deal_card());
+                CheckAce();
             }
 
             public void Stand()
@@ -89,6 +94,7 @@
                 bet += player.removeMoney(bet);
                 wants = false;
                 Take_card();
+                CheckAce();
             }
 
             public Card Split()
@@ -108,6 +114,21 @@
                 }
 
                 return sum;
+            }
+
+            private void CheckAce()
+            {
+                if (Sum() > 21)
+                {
+                    foreach (Card i in hand)
+                    {
+                        if (i.blackjackValue == 11)
+                        {
+                            i.ChangeValue();
+                            break;
+                        }
+                    }
+                }
             }
         }
 

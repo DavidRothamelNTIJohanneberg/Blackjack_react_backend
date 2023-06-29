@@ -4,6 +4,7 @@
     {
         List<Card> hand = new();
         public bool wants = true;
+        public bool bust = false;
 
         public void PrintHand(bool show)
         {
@@ -34,6 +35,11 @@
                 sum += i.blackjackValue;
             }
 
+            if (sum > 21)
+            {
+                bust = true;
+            }
+
             return sum;
         }
 
@@ -55,14 +61,31 @@
             if (Sum() < 17)
             {
                 TakeCard();
+                CheckAce();
             }
             else if (Sum() == 17 && SoftAce())
             {
                 TakeCard();
+                CheckAce();
             }
             else
             {
                 wants = false;
+            }
+        }
+
+        private void CheckAce()
+        {
+            if (Sum() > 21)
+            {
+                foreach (Card i in hand)
+                {
+                    if (i.blackjackValue == 11)
+                    {
+                        i.ChangeValue();
+                        break;
+                    }
+                }
             }
         }
     }
